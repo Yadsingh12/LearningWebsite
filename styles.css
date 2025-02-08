@@ -1,0 +1,26 @@
+.image-container {
+    position: relative;
+    width: 500px;
+    margin: auto;
+}
+
+.background-img {
+    width: 100%;
+    display: block;
+}
+
+.overlay-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
