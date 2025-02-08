@@ -1,23 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find the Object</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <h2>Find the Object and Click on It!</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object Detection Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <p id="instruction">Find the object and click on it:</p>
 
     <div class="image-container" onclick="showMessage(false)">
-        <img id="background" class="background-img">
-        <svg id="overlay" class="overlay-svg" viewBox="0 0 1080 1080"></svg>
+      <img id="background-img" class="background-img" />
+
+      <svg id="overlay-svg" class="overlay-svg" viewBox="0 0 1080 1080">
+        <path
+          id="object-path"
+          fill="transparent"
+          stroke="red"
+          stroke-width="0"
+          pointer-events="all"
+          onclick="showMessage(true)"
+        />
+      </svg>
     </div>
 
     <p id="result"></p>
 
-    <script src="script.js"></script>
+    <div class="button-contaner">
+      <button onclick="goToMainMenu()">Back to Main Menu</button>
+      <button onclick="loadNextChallenge()">Next Challenge</button>
+    </div>
 
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

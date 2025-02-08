@@ -1,7 +1,12 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
 .image-container {
     position: relative;
     width: 500px;
-    margin: auto;
+    margin: 20px auto;
 }
 
 .background-img {
@@ -18,9 +23,9 @@
     pointer-events: none;
 }
 
-#result {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
 }

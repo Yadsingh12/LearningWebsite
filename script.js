@@ -1,25 +1,41 @@
-document.addEventListener("DOMContentLoaded", function () {
-    fetch("assets/objects.json")
-        .then(response => response.json())
-        .then(data => {
-            let randomIndex = Math.floor(Math.random() * data.length);
-            let selectedObject = data[randomIndex];
+let objects = [];
+let currentIndex = -1;
 
-            // Set background image
-            document.getElementById("background").src = "assets/images/" + selectedObject.background;
+// Load objects from JSON file
+async function fetchObjects() {
+    try {
+        const response = await fetch("assets/objects.json");
+        objects = await response.json();
+        loadNextChallenge(); // Load first challenge after fetching data
+    } catch (error) {
+        console.error("Error loading objects.json:", error);
+    }
+}
 
-            // Set object path
-            let overlay = document.getElementById("overlay");
-            overlay.innerHTML = `
-                <path d="${selectedObject.path}" 
-                    fill="transparent" stroke="red" stroke-width="2"
-                    onclick="showMessage(true)" pointer-events="all"/>
-            `;
-        })
-        .catch(error => console.error("Error loading objects:", error));
-});
+// Load a new random object
+function loadNextChallenge() {
+    if (objects.length === 0) return;
 
+    currentIndex = Math.floor(Math.random() * objects.length);
+    let object = objects[currentIndex];
+
+    document.getElementById("background-img").src = "assets/images/" + object.background;
+    document.getElementById("object-path").setAttribute("d", object.path);
+    document.getElementById("result").textContent = "";
+}
+
+// Show message based on whether the correct object was clicked
 function showMessage(isCorrect) {
     event.stopPropagation();
-    document.getElementById("result").textContent = isCorrect ? "Yes, you found it!" : "No, try again!";
+    document.getElementById("result").textContent = isCorrect
+        ? `Yes, it is a ${objects[currentIndex].name}!`
+        : "No, try again!";
 }
+
+// Navigate back to main menu
+function goToMainMenu() {
+    window.location.href = "index.html";
+}
+
+// Fetch objects when page loads
+window.onload = fetchObjects;
