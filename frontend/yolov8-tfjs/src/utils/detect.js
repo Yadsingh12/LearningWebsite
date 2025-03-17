@@ -45,7 +45,7 @@ const preprocess = (source, modelWidth, modelHeight) => {
  * @param {HTMLCanvasElement} canvasRef canvas reference
  * @param {VoidFunction} callback function to run after detection process
  */
-export const detect = async (source, model, canvasRef, callback = () => {}) => {
+export const detect = async (source, model, canvasRef, callback = () => { }) => {
   const [modelWidth, modelHeight] = model.inputShape.slice(1, 3); // get model width and height
 
   tf.engine().startScope(); // start scoping tf engine
@@ -79,9 +79,20 @@ export const detect = async (source, model, canvasRef, callback = () => {}) => {
 
   const nms = await tf.image.nonMaxSuppressionAsync(boxes, scores, 500, 0.45, 0.2); // NMS to filter boxes
 
-  const boxes_data = boxes.gather(nms, 0).dataSync(); // indexing boxes by nms index
-  const scores_data = scores.gather(nms, 0).dataSync(); // indexing scores by nms index
-  const classes_data = classes.gather(nms, 0).dataSync(); // indexing classes by nms index
+  let boxes_data = boxes.gather(nms, 0).dataSync(); // indexing boxes by nms index
+  let scores_data = scores.gather(nms, 0).dataSync(); // indexing scores by nms index
+  let classes_data = classes.gather(nms, 0).dataSync(); // indexing classes by nms index
+
+  // Apply confidence threshold (70%)
+  const threshold = 0.7;
+  const filteredIndices = Array.from(scores_data)
+    .map((score, index) => (score >= threshold ? index : -1))
+    .filter(index => index !== -1); // Remove invalid indices
+
+  boxes_data = filteredIndices.map(index => Array.from(boxes.gather(nms, 0).dataSync().slice(index * 4, index * 4 + 4))).flat();
+  scores_data = filteredIndices.map(index => scores_data[index]);
+  classes_data = filteredIndices.map(index => classes_data[index]);
+
 
   renderBoxes(canvasRef, boxes_data, scores_data, classes_data, [xRatio, yRatio]); // render boxes
   tf.dispose([res, transRes, boxes, scores, classes, nms]); // clear memory
