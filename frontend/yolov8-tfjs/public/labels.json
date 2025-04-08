@@ -210,6 +210,30 @@
     "image": "/images/baseball_bat.jpg"
   },
   {
+    "name": "baseball glove",
+    "description": "A padded leather glove used for catching baseballs.",
+    "sample_video": "/videos/baseball_glove.mp4",
+    "image": "/images/baseball_glove.jpg"
+  },
+  {
+    "name": "skateboard",
+    "description": "A board mounted on wheels used for skating.",
+    "sample_video": "/videos/skateboard.mp4",
+    "image": "/images/skateboard.jpg"
+  },
+  {
+    "name": "surfboard",
+    "description": "A long board used to ride on ocean waves.",
+    "sample_video": "/videos/surfboard.mp4",
+    "image": "/images/surfboard.jpg"
+  },
+  {
+    "name": "tennis racket",
+    "description": "A racket used to hit a tennis ball.",
+    "sample_video": "/videos/tennis_racket.mp4",
+    "image": "/images/tennis_racket.jpg"
+  },
+  {
     "name": "bottle",
     "description": "A container for holding liquids.",
     "sample_video": "/videos/bottle.mp4",
@@ -246,9 +270,213 @@
     "image": "/images/spoon.jpg"
   },
   {
+    "name": "bowl",
+    "description": "A round deep dish used for holding food or liquid.",
+    "sample_video": "/videos/bowl.mp4",
+    "image": "/images/bowl.jpg"
+  },
+  {
+    "name": "banana",
+    "description": "A long curved fruit with a yellow peel.",
+    "sample_video": "/videos/banana.mp4",
+    "image": "/images/banana.jpg"
+  },
+  {
+    "name": "apple",
+    "description": "A round fruit with red, green, or yellow skin.",
+    "sample_video": "/videos/apple.mp4",
+    "image": "/images/apple.jpg"
+  },
+  {
+    "name": "sandwich",
+    "description": "Two slices of bread with filling in between.",
+    "sample_video": "/videos/sandwich.mp4",
+    "image": "/images/sandwich.jpg"
+  },
+  {
+    "name": "orange",
+    "description": "A citrus fruit with a tough bright orange skin.",
+    "sample_video": "/videos/orange.mp4",
+    "image": "/images/orange.jpg"
+  },
+  {
+    "name": "broccoli",
+    "description": "A green vegetable with a tree-like structure.",
+    "sample_video": "/videos/broccoli.mp4",
+    "image": "/images/broccoli.jpg"
+  },
+  {
+    "name": "carrot",
+    "description": "An orange root vegetable often used in salads.",
+    "sample_video": "/videos/carrot.mp4",
+    "image": "/images/carrot.jpg"
+  },
+  {
+    "name": "hot dog",
+    "description": "A cooked sausage served in a sliced bun.",
+    "sample_video": "/videos/hot_dog.mp4",
+    "image": "/images/hot_dog.jpg"
+  },
+  {
+    "name": "pizza",
+    "description": "A baked dish with toppings on a dough base.",
+    "sample_video": "/videos/pizza.mp4",
+    "image": "/images/pizza.jpg"
+  },
+  {
+    "name": "donut",
+    "description": "A fried dough confection, typically ring-shaped.",
+    "sample_video": "/videos/donut.mp4",
+    "image": "/images/donut.jpg"
+  },
+  {
+    "name": "cake",
+    "description": "A sweet baked dessert, often with frosting.",
+    "sample_video": "/videos/cake.mp4",
+    "image": "/images/cake.jpg"
+  },
+  {
+    "name": "chair",
+    "description": "A piece of furniture for sitting, typically with a back.",
+    "sample_video": "/videos/chair.mp4",
+    "image": "/images/chair.jpg"
+  },
+  {
+    "name": "couch",
+    "description": "A long upholstered seat with a back and arms.",
+    "sample_video": "/videos/couch.mp4",
+    "image": "/images/couch.jpg"
+  },
+  {
+    "name": "potted plant",
+    "description": "A plant grown in a container, usually for decoration.",
+    "sample_video": "/videos/potted_plant.mp4",
+    "image": "/images/potted_plant.jpg"
+  },
+  {
+    "name": "bed",
+    "description": "Furniture for sleeping, usually a mattress on a frame.",
+    "sample_video": "/videos/bed.mp4",
+    "image": "/images/bed.jpg"
+  },
+  {
+    "name": "dining table",
+    "description": "A table used for serving and eating meals.",
+    "sample_video": "/videos/dining_table.mp4",
+    "image": "/images/dining_table.jpg"
+  },
+  {
+    "name": "toilet",
+    "description": "A plumbing fixture for human waste disposal.",
+    "sample_video": "/videos/toilet.mp4",
+    "image": "/images/toilet.jpg"
+  },
+  {
+    "name": "tv",
+    "description": "An electronic device for viewing video content.",
+    "sample_video": "/videos/tv.mp4",
+    "image": "/images/tv.jpg"
+  },
+  {
+    "name": "laptop",
+    "description": "A portable personal computer.",
+    "sample_video": "/videos/laptop.mp4",
+    "image": "/images/laptop.jpg"
+  },
+  {
+    "name": "mouse",
+    "description": "A pointing device used with computers.",
+    "sample_video": "/videos/mouse.mp4",
+    "image": "/images/mouse.jpg"
+  },
+  {
+    "name": "remote",
+    "description": "A handheld device for controlling electronics wirelessly.",
+    "sample_video": "/videos/remote.mp4",
+    "image": "/images/remote.jpg"
+  },
+  {
+    "name": "keyboard",
+    "description": "A panel of keys used to input text and commands.",
+    "sample_video": "/videos/keyboard.mp4",
+    "image": "/images/keyboard.jpg"
+  },
+  {
+    "name": "cell phone",
+    "description": "A portable telephone that connects via cellular network.",
+    "sample_video": "/videos/cell_phone.mp4",
+    "image": "/images/cell_phone.jpg"
+  },
+  {
+    "name": "microwave",
+    "description": "An appliance that heats food using microwave radiation.",
+    "sample_video": "/videos/microwave.mp4",
+    "image": "/images/microwave.jpg"
+  },
+  {
+    "name": "oven",
+    "description": "An appliance used for baking or roasting food.",
+    "sample_video": "/videos/oven.mp4",
+    "image": "/images/oven.jpg"
+  },
+  {
+    "name": "toaster",
+    "description": "An appliance that browns slices of bread.",
+    "sample_video": "/videos/toaster.mp4",
+    "image": "/images/toaster.jpg"
+  },
+  {
+    "name": "sink",
+    "description": "A bowl with a faucet for washing hands or dishes.",
+    "sample_video": "/videos/sink.mp4",
+    "image": "/images/sink.jpg"
+  },
+  {
+    "name": "refrigerator",
+    "description": "An appliance that keeps food and drinks cold.",
+    "sample_video": "/videos/refrigerator.mp4",
+    "image": "/images/refrigerator.jpg"
+  },
+  {
+    "name": "book",
+    "description": "A set of printed pages bound together containing information.",
+    "sample_video": "/videos/book.mp4",
+    "image": "/images/book.jpg"
+  },
+  {
+    "name": "clock",
+    "description": "A device for measuring and displaying time.",
+    "sample_video": "/videos/clock.mp4",
+    "image": "/images/clock.jpg"
+  },
+  {
+    "name": "vase",
+    "description": "A container used for holding flowers or decoration.",
+    "sample_video": "/videos/vase.mp4",
+    "image": "/images/vase.jpg"
+  },
+  {
+    "name": "scissors",
+    "description": "A cutting instrument with two blades joined together.",
+    "sample_video": "/videos/scissors.mp4",
+    "image": "/images/scissors.jpg"
+  },
+  {
+    "name": "teddy bear",
+    "description": "A soft stuffed toy bear often used as a comforting companion for children.",
+    "sample_video": "/videos/teddy_bear.mp4",
+    "image": "/images/teddy_bear.jpg"
+  },
+  {
+    "name": "hair drier",
+    "description": "An electric device that blows hot air to dry and style hair after washing.",
+    "sample_video": "/videos/hair_drier.mp4",
+    "image": "/images/hair_drier.jpg"
+  },
+  {
     "name": "toothbrush",
-    "description": "A small brush for cleaning teeth.",
+    "description": "A small brush with a handle, used for cleaning teeth and maintaining oral hygiene.",
     "sample_video": "/videos/toothbrush.mp4",
     "image": "/images/toothbrush.jpg"
-  }
+  }  
 ]

@@ -103,7 +103,7 @@ export const detect = async (source, model, canvasRef, setBoundingBoxes, setShow
   let classes_data = classes.gather(nms, 0).dataSync(); // indexing classes by nms index
 
   // Apply confidence threshold (70%)
-  const threshold = 0.1;
+  const threshold = 0.5;
   const filteredIndices = Array.from(scores_data)
     .map((score, index) => (score >= threshold ? index : -1))
     .filter(index => index !== -1); // Remove invalid indices
