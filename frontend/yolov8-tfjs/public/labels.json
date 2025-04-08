@@ -1,0 +1,212 @@
+[
+  {
+    "name": "person",
+    "description": "A human being, typically walking, running, or standing.",
+    "sample_video": "https://www.youtube.com/embed/hAiUOOeVyRg?si=FQKbcrUQ7uD0pZLq"
+  },
+  {
+    "name": "bicycle",
+    "description": "A two-wheeled vehicle that is powered by pedaling.",
+    "sample_video": "/videos/bicycle.mp4"
+  },
+  {
+    "name": "car",
+    "description": "A four-wheeled motor vehicle used for transportation.",
+    "sample_video": "/videos/car.mp4"
+  },
+  {
+    "name": "motorcycle",
+    "description": "A two-wheeled motor vehicle that is faster than a bicycle.",
+    "sample_video": "/videos/motorcycle.mp4"
+  },
+  {
+    "name": "airplane",
+    "description": "A powered flying vehicle with fixed wings.",
+    "sample_video": "/videos/airplane.mp4"
+  },
+  {
+    "name": "bus",
+    "description": "A large motor vehicle carrying passengers.",
+    "sample_video": "/videos/bus.mp4"
+  },
+  {
+    "name": "train",
+    "description": "A connected series of railway cars moving on tracks.",
+    "sample_video": "/videos/train.mp4"
+  },
+  {
+    "name": "truck",
+    "description": "A large motor vehicle designed for transporting goods.",
+    "sample_video": "/videos/truck.mp4"
+  },
+  {
+    "name": "boat",
+    "description": "A watercraft of various sizes used for transportation on water.",
+    "sample_video": "/videos/boat.mp4"
+  },
+  {
+    "name": "traffic light",
+    "description": "A signaling device at road intersections controlling traffic flow.",
+    "sample_video": "/videos/traffic_light.mp4"
+  },
+  {
+    "name": "fire hydrant",
+    "description": "A water source for firefighters in case of emergency.",
+    "sample_video": "/videos/fire_hydrant.mp4"
+  },
+  {
+    "name": "stop sign",
+    "description": "A road sign indicating vehicles must stop before proceeding.",
+    "sample_video": "/videos/stop_sign.mp4"
+  },
+  {
+    "name": "parking meter",
+    "description": "A device that collects fees for vehicle parking.",
+    "sample_video": "/videos/parking_meter.mp4"
+  },
+  {
+    "name": "bench",
+    "description": "A long seat for multiple people, usually found in public places.",
+    "sample_video": "/videos/bench.mp4"
+  },
+  {
+    "name": "bird",
+    "description": "A warm-blooded vertebrate animal with feathers and wings.",
+    "sample_video": "/videos/bird.mp4"
+  },
+  {
+    "name": "cat",
+    "description": "A small domesticated carnivorous mammal with soft fur.",
+    "sample_video": "/videos/cat.mp4"
+  },
+  {
+    "name": "dog",
+    "description": "A domesticated carnivorous mammal known for loyalty and companionship.",
+    "sample_video": "/videos/dog.mp4"
+  },
+  {
+    "name": "horse",
+    "description": "A large domesticated animal used for riding and work.",
+    "sample_video": "/videos/horse.mp4"
+  },
+  {
+    "name": "sheep",
+    "description": "A domesticated ruminant animal known for its woolly coat.",
+    "sample_video": "/videos/sheep.mp4"
+  },
+  {
+    "name": "cow",
+    "description": "A large domesticated animal raised for milk and meat.",
+    "sample_video": "/videos/cow.mp4"
+  },
+  {
+    "name": "elephant",
+    "description": "A large land mammal with a trunk, native to Africa and Asia.",
+    "sample_video": "/videos/elephant.mp4"
+  },
+  {
+    "name": "bear",
+    "description": "A large, heavy mammal with thick fur, found in forests and mountains.",
+    "sample_video": "/videos/bear.mp4"
+  },
+  {
+    "name": "zebra",
+    "description": "An African wild horse with distinctive black-and-white stripes.",
+    "sample_video": "/videos/zebra.mp4"
+  },
+  {
+    "name": "giraffe",
+    "description": "A tall African mammal with a very long neck and spotted coat.",
+    "sample_video": "/videos/giraffe.mp4"
+  },
+  {
+    "name": "backpack",
+    "description": "A bag worn on the back to carry items.",
+    "sample_video": "/videos/backpack.mp4"
+  },
+  {
+    "name": "umbrella",
+    "description": "A device used to protect against rain or sun.",
+    "sample_video": "/videos/umbrella.mp4"
+  },
+  {
+    "name": "handbag",
+    "description": "A small bag carried by hand for personal items.",
+    "sample_video": "/videos/handbag.mp4"
+  },
+  {
+    "name": "tie",
+    "description": "A neck accessory worn with formal shirts.",
+    "sample_video": "/videos/tie.mp4"
+  },
+  {
+    "name": "suitcase",
+    "description": "A portable container for carrying clothes and personal items.",
+    "sample_video": "/videos/suitcase.mp4"
+  },
+  {
+    "name": "frisbee",
+    "description": "A lightweight disc thrown and caught in a game.",
+    "sample_video": "/videos/frisbee.mp4"
+  },
+  {
+    "name": "skis",
+    "description": "Narrow strips attached to boots for gliding over snow.",
+    "sample_video": "/videos/skis.mp4"
+  },
+  {
+    "name": "snowboard",
+    "description": "A flat board used for gliding down snowy slopes.",
+    "sample_video": "/videos/snowboard.mp4"
+  },
+  {
+    "name": "sports ball",
+    "description": "A spherical object used in various sports.",
+    "sample_video": "/videos/sports_ball.mp4"
+  },
+  {
+    "name": "kite",
+    "description": "A lightweight frame covered with material flown in the wind.",
+    "sample_video": "/videos/kite.mp4"
+  },
+  {
+    "name": "baseball bat",
+    "description": "A wooden or metal bat used to hit a baseball.",
+    "sample_video": "/videos/baseball_bat.mp4"
+  },
+  {
+    "name": "bottle",
+    "description": "A container for holding liquids.",
+    "sample_video": "/videos/bottle.mp4"
+  },
+  {
+    "name": "wine glass",
+    "description": "A stemmed glass designed for drinking wine.",
+    "sample_video": "/videos/wine_glass.mp4"
+  },
+  {
+    "name": "cup",
+    "description": "A small open container for drinking liquids.",
+    "sample_video": "/videos/cup.mp4"
+  },
+  {
+    "name": "fork",
+    "description": "A utensil with prongs for eating food.",
+    "sample_video": "/videos/fork.mp4"
+  },
+  {
+    "name": "knife",
+    "description": "A tool with a blade used for cutting.",
+    "sample_video": "/videos/knife.mp4"
+  },
+  {
+    "name": "spoon",
+    "description": "A utensil with a round bowl for scooping food.",
+    "sample_video": "/videos/spoon.mp4"
+  },
+  {
+    "name": "toothbrush",
+    "description": "A small brush for cleaning teeth.",
+    "sample_video": "/videos/toothbrush.mp4"
+  }
+]

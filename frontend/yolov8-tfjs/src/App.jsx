@@ -4,16 +4,15 @@ import "@tensorflow/tfjs-backend-webgl"; // set backend to webgl
 import Loader from "./components/loader";
 import ButtonHandler from "./components/btn-handler";
 import { detect, detectVideo } from "./utils/detect";
+import BoundingBoxPopup from "./components/BoundingBoxPopup"; // Import Popup Component
 import "./style/App.css";
 
 const App = () => {
-  const [loading, setLoading] = useState({ loading: true, progress: 0 }); // loading state
-  const [model, setModel] = useState({
-    net: null,
-    inputShape: [1, 0, 0, 3],
-  }); // init model & input shape
+  const [loading, setLoading] = useState({ loading: true, progress: 0 });
+  const [model, setModel] = useState({ net: null, inputShape: [1, 0, 0, 3] });
+  const [boundingBoxes, setBoundingBoxes] = useState([]); // Store detected boxes
+  const [showPopup, setShowPopup] = useState(false);
 
-  // references
   const imageRef = useRef(null);
   const cameraRef = useRef(null);
   const videoRef = useRef(null);
@@ -27,9 +26,7 @@ const App = () => {
       const yolov8 = await tf.loadGraphModel(
         `${window.location.href}/${modelName}_web_model/model.json`,
         {
-          onProgress: (fractions) => {
-            setLoading({ loading: true, progress: fractions }); // set loading fractions
-          },
+          onProgress: (fractions) => setLoading({ loading: true, progress: fractions }),
         }
       ); // load model
 
@@ -38,10 +35,7 @@ const App = () => {
       const warmupResults = yolov8.execute(dummyInput);
 
       setLoading({ loading: false, progress: 1 });
-      setModel({
-        net: yolov8,
-        inputShape: yolov8.inputs[0].shape,
-      }); // set model & input shape
+      setModel({ net: yolov8, inputShape: yolov8.inputs[0].shape });
 
       tf.dispose([warmupResults, dummyInput]); // cleanup memory
     });
@@ -52,34 +46,38 @@ const App = () => {
       {loading.loading && <Loader>Loading model... {(loading.progress * 100).toFixed(2)}%</Loader>}
       <div className="header">
         <h1>📷 YOLOv8 Live Detection App</h1>
-        <p>
-          YOLOv8 live detection application on browser powered by <code>tensorflow.js</code>
-        </p>
-        <p>
-          Serving : <code className="code">{modelName}</code>
-        </p>
+        <p>YOLOv8 live detection powered by <code>tensorflow.js</code></p>
+        <p>Serving: <code className="code">{modelName}</code></p>
       </div>
 
       <div className="content">
         <img
           src="#"
           ref={imageRef}
-          onLoad={() => detect(imageRef.current, model, canvasRef.current)}
+          onLoad={() => detect(imageRef.current, model, canvasRef.current, setBoundingBoxes, setShowPopup)}
         />
         <video
           autoPlay
           muted
           ref={cameraRef}
-          onPlay={() => detectVideo(cameraRef.current, model, canvasRef.current)}
+          onPlay={() => detectVideo(cameraRef.current, model, canvasRef.current, setBoundingBoxes, setShowPopup)}
         />
         <video
           autoPlay
           muted
           ref={videoRef}
-          onPlay={() => detectVideo(videoRef.current, model, canvasRef.current)}
+          onPlay={() => detectVideo(videoRef.current, model, canvasRef.current, setBoundingBoxes, setShowPopup)}
         />
         <canvas width={model.inputShape[1]} height={model.inputShape[2]} ref={canvasRef} />
       </div>
+
+      {showPopup && (
+        <BoundingBoxPopup
+          boundingBoxes={boundingBoxes}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
+      {/* Show bounding box popup */}
 
       <ButtonHandler imageRef={imageRef} cameraRef={cameraRef} videoRef={videoRef} />
     </div>

@@ -1,8 +1,16 @@
 import * as tf from "@tensorflow/tfjs";
 import { renderBoxes } from "./renderBox";
-import labels from "./labels.json";
 
-const numClass = labels.length;
+let labels = null;
+let labelsLoaded = false;
+
+fetch("/labels.json") // ✅ Correct way to load from public folder
+  .then((response) => response.json())
+  .then((data) => {
+    labels = data;
+    labelsLoaded = true; // ✅ Mark labels as loaded
+  })
+  .catch((error) => console.error("Error loading labels:", error));
 
 /**
  * Preprocess image / frame before forwarded into the model
@@ -45,7 +53,18 @@ const preprocess = (source, modelWidth, modelHeight) => {
  * @param {HTMLCanvasElement} canvasRef canvas reference
  * @param {VoidFunction} callback function to run after detection process
  */
-export const detect = async (source, model, canvasRef, callback = () => { }) => {
+export const detect = async (source, model, canvasRef, setBoundingBoxes, setShowPopup, callback = () => { }) => {
+  if (!labelsLoaded) {
+    console.error("Labels not loaded yet! Skipping detection.");
+    return;
+  }
+
+  const numClass = Object.keys(labels).length; // ✅ Ensure `numClass` is valid
+  if (numClass === 0) {
+    console.error("No classes found! Skipping detection.");
+    return;
+  }
+
   const [modelWidth, modelHeight] = model.inputShape.slice(1, 3); // get model width and height
 
   tf.engine().startScope(); // start scoping tf engine
@@ -94,7 +113,7 @@ export const detect = async (source, model, canvasRef, callback = () => { }) => 
   classes_data = filteredIndices.map(index => classes_data[index]);
 
 
-  renderBoxes(canvasRef, boxes_data, scores_data, classes_data, [xRatio, yRatio]); // render boxes
+  renderBoxes(canvasRef, boxes_data, scores_data, classes_data, [xRatio, yRatio], setBoundingBoxes, setShowPopup); // render boxes
   tf.dispose([res, transRes, boxes, scores, classes, nms]); // clear memory
 
   callback();
@@ -108,7 +127,7 @@ export const detect = async (source, model, canvasRef, callback = () => { }) => 
  * @param {tf.GraphModel} model loaded YOLOv8 tensorflow.js model
  * @param {HTMLCanvasElement} canvasRef canvas reference
  */
-export const detectVideo = (vidSource, model, canvasRef) => {
+export const detectVideo = (vidSource, model, canvasRef, setBoundingBoxes, setShowPopup) => {
   /**
    * Function to detect every frame from video
    */
@@ -119,7 +138,7 @@ export const detectVideo = (vidSource, model, canvasRef) => {
       return; // handle if source is closed
     }
 
-    detect(vidSource, model, canvasRef, () => {
+    detect(vidSource, model, canvasRef, setBoundingBoxes, setShowPopup, () => {
       requestAnimationFrame(detectFrame); // get another frame
     });
   };
