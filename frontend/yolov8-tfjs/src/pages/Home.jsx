@@ -9,6 +9,10 @@ const Home = () => {
       <Link to="/object-detection">
         <button>🔍 Live Object Detection</button>
       </Link>
+      <br /><br />
+      <Link to="/quiz">
+        <button>🧠 Quiz Yourself</button> {/* 👈 new quiz button */}
+      </Link>
     </div>
   );
 };
