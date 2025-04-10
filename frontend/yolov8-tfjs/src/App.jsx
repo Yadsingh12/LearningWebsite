@@ -3,14 +3,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ObjectDetection from "./pages/ObjectDetection";
 import Quiz from "./pages/Quiz";
+import SentenceFormationMenu from "./pages/SentenceFormationMenu";
+import GrammarLesson from "./pages/GrammarLesson";
 
 const App = () => {
   return (
     <Router basename="/yolov8-tfjs">
       <Routes>
         <Route path="/" element={<Home />} />
+        
         <Route path="/object-detection" element={<ObjectDetection />} />
+
         <Route path="/quiz" element={<Quiz />} />
+
+        <Route path="/isl-grammar" element={<SentenceFormationMenu />} />
+        <Route path="/isl-grammar/type/:id" element={<GrammarLesson />} />
       </Routes>
     </Router>
   );

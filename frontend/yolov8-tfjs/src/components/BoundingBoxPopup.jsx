@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import "../style/BoundingBoxPopup.css";
 
 const BoundingBoxPopup = ({ boundingBoxes, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
