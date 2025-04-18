@@ -2,7 +2,7 @@
   {
     "name": "person",
     "description": "A human being, typically walking, running, or standing.",
-    "sample_video": "https://www.youtube.com/embed/hAiUOOeVyRg?si=FQKbcrUQ7uD0pZLq",
+    "sample_video": "/videos/person.mp4",
     "image": "/images/person.jpg"
   },
   {
