@@ -29,6 +29,9 @@ export default function GrammarLesson() {
       <button onClick={() => navigate('/isl-grammar')}>← Back to Menu</button>
       <h2>{module.name} Grammar</h2>
       <p><strong>Rule:</strong> {module.rule}</p>
+      {module.explanation && (
+        <p className="explanation"><strong>Explanation:</strong> {module.explanation}</p>
+      )}
       <p><strong>Example:</strong> {module.example.english} → <em>{module.example.isl}</em></p>
 
       {currentIndex < module.practiceSentences.length ? (
@@ -46,7 +49,7 @@ export default function GrammarLesson() {
             <p>
               {userAnswer.trim().toLowerCase() === current.isl.toLowerCase()
                 ? "✅ Correct!"
-                : `❌ Correct Answer: ${current.isl}`}
+                : `❌ Incorrect Answer: ${current.isl}`}
             </p>
           )}
 

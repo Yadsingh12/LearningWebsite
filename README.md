@@ -51,6 +51,11 @@ Use another YOLOv8 model.
    ```
 4. Done! 😊
 
+## Credits
+
+Part of the object detection module is based on [yolov8-tfjs](https://github.com/Hyuto/yolov8-tfjs) by Wahyu Setianto.
+
+
 **Note: Custom Trained YOLOv8 Models**
 
 Please update `src/utils/labels.json` with your new classes.

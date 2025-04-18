@@ -8,7 +8,7 @@ import GrammarLesson from "./pages/GrammarLesson";
 
 const App = () => {
   return (
-    <Router basename="/yolov8-tfjs">
+    <Router basename="/frontend">
       <Routes>
         <Route path="/" element={<Home />} />
         

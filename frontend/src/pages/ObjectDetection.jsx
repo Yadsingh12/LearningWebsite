@@ -41,6 +41,18 @@ const ObjectDetection = () => {
     });
   }, []);
 
+  useEffect(() => {
+    return () => {
+      [cameraRef, videoRef].forEach((ref) => {
+        if (ref.current && ref.current.srcObject) {
+          ref.current.srcObject.getTracks().forEach((track) => track.stop());
+          ref.current.srcObject = null;
+        }
+      });
+    };
+  }, []);
+  
+
   return (
     <div className="App">
       {loading.loading && <Loader>Loading model... {(loading.progress * 100).toFixed(2)}%</Loader>}
