@@ -1,23 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../style/home.css"; // Ensure the path is correct
 
 const Home = () => {
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="App">
       {/* Hero Section */}
-      <section style={{ textAlign: "center", marginBottom: "3rem" }}>
+      <section style={{ maxWidth: "800px" }}>
         <h1>Welcome to ISL Learning Hub</h1>
-        <p style={{ fontSize: "1.2rem", maxWidth: "600px", margin: "1rem auto" }}>
-          A fun and interactive platform to help you learn Indian Sign Language (ISL) through object detection, quizzes, grammar lessons, and more!
+        <p>
+          Learn Indian Sign Language (ISL) interactively through real-time
+          gesture detection, grammar lessons, quizzes, and more!
         </p>
       </section>
 
       {/* Features Section */}
-      <section>
-        <h2 style={{ marginBottom: "1.5rem" }}>Features</h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem" }}>
+      <section style={{ maxWidth: "1000px", width: "100%" }}>
+        <h2 style={{ margin: "2rem 0 1rem 0", color: "#444" }}>Explore Features</h2>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "1.5rem",
+          }}
+        >
           <FeatureCard
-            title="Real-time Object Detection"
+            title="Object Detection"
             description="Use your camera to detect hand gestures and learn ISL signs interactively."
             to="/object-detection"
           />
@@ -34,35 +43,37 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Benefits / Motivation */}
-      <section style={{ marginTop: "4rem" }}>
-        <h2>Why Choose This Platform?</h2>
-        <ul style={{ paddingLeft: "1.5rem", marginTop: "1rem" }}>
-          <li>🚀 Easy-to-use and beginner friendly</li>
-          <li>🎯 Focused on Indian Sign Language</li>
-          <li>🧠 Engaging content with interactive tools</li>
-        </ul>
+      {/* Contact Section */}
+      <section style={{ marginTop: "3rem", textAlign: "center" }}>
+        <h2>Contact Us</h2>
+        <p style={{ color: "#555" }}>
+          Have questions, suggestions, or feedback? Drop an email at:
+        </p>
+        <p style={{ marginTop: "0.5rem", fontSize: "1.1rem", color: "#333" }}>
+          📧 Email: <a href="mailto:yadaulakh1977@gmail.com">yadaulakh1977@gmail.com</a><br />
+        </p>
       </section>
     </div>
   );
 };
 
-// Simple feature card component
 const FeatureCard = ({ title, description, to }) => (
-  <Link to={to} style={{ textDecoration: "none", color: "inherit", flex: "1 1 250px" }}>
+  <Link to={to}>
     <div
       style={{
         border: "1px solid #ccc",
-        borderRadius: "8px",
+        borderRadius: "10px",
         padding: "1.5rem",
-        transition: "0.3s",
-        height: "100%",
+        width: "250px",
+        backgroundColor: "#fff",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
+        transition: "transform 0.2s ease",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)")}
-      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
-      <h3>{title}</h3>
-      <p>{description}</p>
+      <h3 style={{ marginBottom: "1rem", color: "#222" }}>{title}</h3>
+      <p style={{ color: "#555" }}>{description}</p>
     </div>
   </Link>
 );

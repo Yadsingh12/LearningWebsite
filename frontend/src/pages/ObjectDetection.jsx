@@ -51,36 +51,90 @@ const ObjectDetection = () => {
       });
     };
   }, []);
-  
+
 
   return (
     <div className="App">
-      {loading.loading && <Loader>Loading model... {(loading.progress * 100).toFixed(2)}%</Loader>}
+      {loading.loading && (
+        <Loader>
+          Loading model... {(loading.progress * 100).toFixed(2)}%
+        </Loader>
+      )}
+
       <div className="header">
         <h1>📷 YOLOv8 Live Detection App</h1>
-        <p>YOLOv8 live detection powered by tensorflow.js</p>
-        <p>Serving: <code className="code">{modelName}</code></p>
+        <p>YOLOv8 live detection powered by TensorFlow.js</p>
+        <p>
+          Serving: <code className="code">{modelName}</code>
+        </p>
       </div>
+
+      {/* 👉 About Section */}
+      <section className="about">
+        <h2>What is this page?</h2>
+        <p>
+          This tool uses a lightweight object detection model (YOLOv8) to
+          recognize and track signs from your webcam, images, or uploaded videos
+          in real-time. It's perfect for sign language detection and gesture-based
+          learning systems.
+        </p>
+
+        <h3>How to use:</h3>
+        <ul>
+          <li>📸 Choose between image, camera, or video input.</li>
+          <li>✅ Grant camera permission when prompted.</li>
+          <li>🔍 The model will detect and highlight objects or signs it recognizes.</li>
+          <li>🧠 Click on a bounding box to view more information.</li>
+        </ul>
+      </section>
 
       <div className="content">
         <img
           src="#"
           ref={imageRef}
-          onLoad={() => detect(imageRef.current, model, canvasRef.current, setBoundingBoxes, setShowPopup)}
+          onLoad={() =>
+            detect(
+              imageRef.current,
+              model,
+              canvasRef.current,
+              setBoundingBoxes,
+              setShowPopup
+            )
+          }
         />
         <video
           autoPlay
           muted
           ref={cameraRef}
-          onPlay={() => detectVideo(cameraRef.current, model, canvasRef.current, setBoundingBoxes, setShowPopup)}
+          onPlay={() =>
+            detectVideo(
+              cameraRef.current,
+              model,
+              canvasRef.current,
+              setBoundingBoxes,
+              setShowPopup
+            )
+          }
         />
         <video
           autoPlay
           muted
           ref={videoRef}
-          onPlay={() => detectVideo(videoRef.current, model, canvasRef.current, setBoundingBoxes, setShowPopup)}
+          onPlay={() =>
+            detectVideo(
+              videoRef.current,
+              model,
+              canvasRef.current,
+              setBoundingBoxes,
+              setShowPopup
+            )
+          }
         />
-        <canvas width={model.inputShape[1]} height={model.inputShape[2]} ref={canvasRef} />
+        <canvas
+          width={model.inputShape[1]}
+          height={model.inputShape[2]}
+          ref={canvasRef}
+        />
       </div>
 
       {showPopup && (
@@ -89,11 +143,16 @@ const ObjectDetection = () => {
           onClose={() => setShowPopup(false)}
         />
       )}
-      {/* Show bounding box popup */}
 
-      <ButtonHandler imageRef={imageRef} cameraRef={cameraRef} videoRef={videoRef} />
+      <ButtonHandler
+        imageRef={imageRef}
+        cameraRef={cameraRef}
+        videoRef={videoRef}
+      />
     </div>
   );
+
+
 };
 
 export default ObjectDetection;

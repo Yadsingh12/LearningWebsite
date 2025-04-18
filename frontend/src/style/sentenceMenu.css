@@ -1,41 +1,79 @@
-/* sentenceMenu.css */
 .sentence-menu-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #f0faff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-  }
-  
-  .sentence-menu-container h2 {
-    color: #004080;
-    margin-bottom: 20px;
-  }
-  
-  .sentence-menu-container ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sentence-menu-container li {
-    margin: 10px 0;
-  }
-  
-  .sentence-menu-container button {
-    background-color: #0077cc;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .sentence-menu-container button:hover {
-    background-color: #005fa3;
-  }
-  
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f0faff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+.sentence-menu-container h2 {
+  color: #004080;
+  margin-bottom: 20px;
+}
+
+.sentence-menu-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sentence-menu-container li {
+  margin: 10px 0;
+}
+
+.sentence-menu-container button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.sentence-menu-container button:hover {
+  background-color: #005fa3;
+}
+
+/* Styling for About Section */
+.about-section {
+  margin-bottom: 20px;
+  background-color: #e6f7ff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h3 {
+  color: #0077cc;
+  margin-bottom: 10px;
+}
+
+.about-section p {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Styling for Instructions Section */
+.instructions-section {
+  margin-bottom: 20px;
+}
+
+.instructions-section h3 {
+  color: #0077cc;
+  margin-bottom: 10px;
+}
+
+.instructions-section ul {
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  margin-left: 20px;
+}
+
+.instructions-section ul li {
+  margin-bottom: 5px;
+}
