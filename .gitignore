@@ -1,4 +1,5 @@
 my_env/
 python/backend/.env
 python/backend/backend_env
+python/backend/__pycache__/
 node_modules/
