@@ -15,7 +15,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/register', form);
+      await axios.post('http://localhost:5000/register', form);
       setMessage('✅ Account created! You can now log in.');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {

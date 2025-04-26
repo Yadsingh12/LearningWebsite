@@ -1,1 +1,4 @@
-myenv/
+my_env/
+python/backend/.env
+python/backend/backend_env
+node_modules/

@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token) {
-      axios.get('http://localhost:5000/api/protected', {
+      axios.get('http://localhost:5000/protected', {
         headers: { Authorization: `Bearer ${token}` }
       }).then(res => {
         setUser({ username: res.data.username });
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (username, password) => {
-    return axios.post('http://localhost:5000/api/login', { username, password })
+    return axios.post('http://localhost:5000/login', { username, password })
       .then(res => {
         const token = res.data.token;
         localStorage.setItem('authToken', token);
