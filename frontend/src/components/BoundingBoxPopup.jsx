@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import ReactPlayer from "react-player";
 import "../style/BoundingBoxPopup.css";
 
 const BoundingBoxPopup = ({ boundingBoxes, onClose }) => {
@@ -7,7 +8,6 @@ const BoundingBoxPopup = ({ boundingBoxes, onClose }) => {
   const popupRef = useRef(null);
 
   useEffect(() => {
-    // Load labels.json from the public folder dynamically
     fetch("/labels.json")
       .then((response) => response.json())
       .then((data) => setLabelsData(data))
@@ -34,20 +34,26 @@ const BoundingBoxPopup = ({ boundingBoxes, onClose }) => {
       <div className="popup-content" ref={popupRef}>
         <h3>{currentBox.name}</h3>
         <p>{currentBox.description}</p>
+
         {currentBox.sample_video && (
           currentBox.sample_video.includes("youtube.com") ? (
-            <iframe
-              width="560"
-              height="315"
-              src={currentBox.sample_video}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+            <ReactPlayer
+              url={currentBox.sample_video}
+              width="560px"
+              height="315px"
+              controls
+              muted
+              playing={false}
+            />
           ) : (
-            <video src={currentBox.sample_video} controls />
+            <ReactPlayer
+              url={currentBox.sample_video}
+              width="560px"
+              height="315px"
+              controls
+              muted
+              playing={false}
+            />
           )
         )}
 
