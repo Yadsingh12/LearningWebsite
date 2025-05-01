@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import ObjectDetection from "./pages/ObjectDetection";
 import Quiz from "./pages/Quiz";
+import VideoLibrary from "./pages/VideoLibrary";  
 import SentenceFormationMenu from "./pages/SentenceFormationMenu";
 import GrammarLesson from "./pages/GrammarLesson";
 import ConvertToISL from "./pages/ConvertToISL";
@@ -20,6 +21,9 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/object-detection" element={<ObjectDetection />} />
             <Route path="/quiz" element={<Quiz />} />
+            <Route path="/video-library" element={<VideoLibrary />} />
+
+            {/* ISL Grammar routes */}
             <Route path="/isl-grammar" element={<SentenceFormationMenu />} />
             <Route path="/isl-grammar/type/:id" element={<GrammarLesson />} />
             <Route path="/isl-grammar/convertToISL" element={<ConvertToISL />} />

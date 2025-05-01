@@ -1,0 +1,29 @@
+.video-library {
+    padding: 20px;
+    max-width: 700px;
+    margin: auto;
+  }
+  
+  .video-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .video-item {
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  .video-title {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .video-details {
+    margin-top: 10px;
+  }
+  
