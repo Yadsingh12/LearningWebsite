@@ -3,12 +3,20 @@ import { renderBoxes } from "./renderBox";
 
 let labels = null;
 let labelsLoaded = false;
+let enabledClassIndices = new Set(); // ✅ Will hold indices of enabled classes
 
-fetch("/labels.json") // ✅ Correct way to load from public folder
+fetch("/labels.json")
   .then((response) => response.json())
   .then((data) => {
     labels = data;
-    labelsLoaded = true; // ✅ Mark labels as loaded
+    labelsLoaded = true;
+
+    // ✅ Store indices of enabled classes
+    enabledClassIndices = new Set(
+      data
+        .map((label, index) => (label.enabled ? index : -1))
+        .filter(index => index !== -1)
+    );
   })
   .catch((error) => console.error("Error loading labels:", error));
 
@@ -20,27 +28,25 @@ fetch("/labels.json") // ✅ Correct way to load from public folder
  * @returns input tensor, xRatio and yRatio
  */
 const preprocess = (source, modelWidth, modelHeight) => {
-  let xRatio, yRatio; // ratios for boxes
+  let xRatio, yRatio;
 
   const input = tf.tidy(() => {
     const img = tf.browser.fromPixels(source);
-
-    // padding image to square => [n, m] to [n, n], n > m
-    const [h, w] = img.shape.slice(0, 2); // get source width and height
-    const maxSize = Math.max(w, h); // get max size
+    const [h, w] = img.shape.slice(0, 2);
+    const maxSize = Math.max(w, h);
     const imgPadded = img.pad([
-      [0, maxSize - h], // padding y [bottom only]
-      [0, maxSize - w], // padding x [right only]
+      [0, maxSize - h],
+      [0, maxSize - w],
       [0, 0],
     ]);
 
-    xRatio = maxSize / w; // update xRatio
-    yRatio = maxSize / h; // update yRatio
+    xRatio = maxSize / w;
+    yRatio = maxSize / h;
 
     return tf.image
-      .resizeBilinear(imgPadded, [modelWidth, modelHeight]) // resize frame
-      .div(255.0) // normalize
-      .expandDims(0); // add batch
+      .resizeBilinear(imgPadded, [modelWidth, modelHeight])
+      .div(255.0)
+      .expandDims(0);
   });
 
   return [input, xRatio, yRatio];
@@ -59,70 +65,70 @@ export const detect = async (source, model, canvasRef, setBoundingBoxes, setShow
     return;
   }
 
-  const numClass = Object.keys(labels).length; // ✅ Ensure `numClass` is valid
+  const numClass = Object.keys(labels).length;
   if (numClass === 0) {
     console.error("No classes found! Skipping detection.");
     return;
   }
 
-  const [modelWidth, modelHeight] = model.inputShape.slice(1, 3); // get model width and height
+  const [modelWidth, modelHeight] = model.inputShape.slice(1, 3);
 
-  tf.engine().startScope(); // start scoping tf engine
-  const [input, xRatio, yRatio] = preprocess(source, modelWidth, modelHeight); // preprocess image
+  tf.engine().startScope();
+  const [input, xRatio, yRatio] = preprocess(source, modelWidth, modelHeight);
 
-  const res = model.net.execute(input); // inference model
-  const transRes = res.transpose([0, 2, 1]); // transpose result [b, det, n] => [b, n, det]
+  const res = model.net.execute(input);
+  const transRes = res.transpose([0, 2, 1]);
   const boxes = tf.tidy(() => {
-    const w = transRes.slice([0, 0, 2], [-1, -1, 1]); // get width
-    const h = transRes.slice([0, 0, 3], [-1, -1, 1]); // get height
-    const x1 = tf.sub(transRes.slice([0, 0, 0], [-1, -1, 1]), tf.div(w, 2)); // x1
-    const y1 = tf.sub(transRes.slice([0, 0, 1], [-1, -1, 1]), tf.div(h, 2)); // y1
+    const w = transRes.slice([0, 0, 2], [-1, -1, 1]);
+    const h = transRes.slice([0, 0, 3], [-1, -1, 1]);
+    const x1 = tf.sub(transRes.slice([0, 0, 0], [-1, -1, 1]), tf.div(w, 2));
+    const y1 = tf.sub(transRes.slice([0, 0, 1], [-1, -1, 1]), tf.div(h, 2));
     return tf
       .concat(
-        [
-          y1,
-          x1,
-          tf.add(y1, h), //y2
-          tf.add(x1, w), //x2
-        ],
+        [y1, x1, tf.add(y1, h), tf.add(x1, w)],
         2
       )
       .squeeze();
-  }); // process boxes [y1, x1, y2, x2]
+  });
 
   const [scores, classes] = tf.tidy(() => {
-    // class scores
-    const rawScores = transRes.slice([0, 0, 4], [-1, -1, numClass]).squeeze(0); // #6 only squeeze axis 0 to handle only 1 class models
+    const rawScores = transRes.slice([0, 0, 4], [-1, -1, numClass]).squeeze(0);
     return [rawScores.max(1), rawScores.argMax(1)];
-  }); // get max scores and classes index
+  });
 
-  const nms = await tf.image.nonMaxSuppressionAsync(boxes, scores, 500, 0.45, 0.2); // NMS to filter boxes
+  const nms = await tf.image.nonMaxSuppressionAsync(boxes, scores, 500, 0.45, 0.2);
 
-  let boxes_data = boxes.gather(nms, 0).dataSync(); // indexing boxes by nms index
-  let scores_data = scores.gather(nms, 0).dataSync(); // indexing scores by nms index
-  let classes_data = classes.gather(nms, 0).dataSync(); // indexing classes by nms index
+  const boxesNMS = boxes.gather(nms, 0);
+  const scoresNMS = scores.gather(nms, 0);
+  const classesNMS = classes.gather(nms, 0);
 
-  // Apply confidence threshold (70%)
+  let boxes_data_all = boxesNMS.dataSync();
+  let scores_data_all = scoresNMS.dataSync();
+  let classes_data_all = classesNMS.dataSync();
+
+  // ✅ Filter by threshold and only enabled classes
   const threshold = 0.5;
-  const filteredIndices = Array.from(scores_data)
-    .map((score, index) => (score >= threshold ? index : -1))
-    .filter(index => index !== -1); // Remove invalid indices
+  const filteredIndices = Array.from(scores_data_all)
+    .map((score, index) => {
+      const classIndex = classes_data_all[index];
+      return (score >= threshold && enabledClassIndices.has(classIndex)) ? index : -1;
+    })
+    .filter(index => index !== -1);
 
-  boxes_data = filteredIndices.map(index => Array.from(boxes.gather(nms, 0).dataSync().slice(index * 4, index * 4 + 4))).flat();
-  scores_data = filteredIndices.map(index => scores_data[index]);
-  classes_data = filteredIndices.map(index => classes_data[index]);
+  const boxes_data = filteredIndices
+    .map(index => Array.from(boxes_data_all.slice(index * 4, index * 4 + 4)))
+    .flat();
+  const scores_data = filteredIndices.map(index => scores_data_all[index]);
+  const classes_data = filteredIndices.map(index => classes_data_all[index]);
 
+  renderBoxes(canvasRef, boxes_data, scores_data, classes_data, [xRatio, yRatio], setBoundingBoxes, setShowPopup);
 
-  renderBoxes(canvasRef, boxes_data, scores_data, classes_data, [xRatio, yRatio], setBoundingBoxes, setShowPopup); // render boxes
-  tf.dispose([res, transRes, boxes, scores, classes, nms]); // clear memory
-
+  tf.dispose([res, transRes, boxes, scores, classes, nms, boxesNMS, scoresNMS, classesNMS]);
   callback();
-
-  tf.engine().endScope(); // end of scoping
+  tf.engine().endScope();
 };
 
 /**
- * Function to detect video from every source.
  * @param {HTMLVideoElement} vidSource video source
  * @param {tf.GraphModel} model loaded YOLOv8 tensorflow.js model
  * @param {HTMLCanvasElement} canvasRef canvas reference
@@ -134,14 +140,14 @@ export const detectVideo = (vidSource, model, canvasRef, setBoundingBoxes, setSh
   const detectFrame = async () => {
     if (vidSource.videoWidth === 0 && vidSource.srcObject === null) {
       const ctx = canvasRef.getContext("2d");
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // clean canvas
-      return; // handle if source is closed
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      return;
     }
 
     detect(vidSource, model, canvasRef, setBoundingBoxes, setShowPopup, () => {
-      requestAnimationFrame(detectFrame); // get another frame
+      requestAnimationFrame(detectFrame);
     });
   };
 
-  detectFrame(); // initialize to detect every frame
+  detectFrame();
 };
