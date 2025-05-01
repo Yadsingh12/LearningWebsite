@@ -14,6 +14,16 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // ✅ Password strength check
+    const password = form.password;
+    const isStrong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
+  
+    if (!isStrong) {
+      setMessage("❌ Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol.");
+      return;
+    }
+  
     try {
       await axios.post('http://localhost:5000/register', form);
       setMessage('✅ Account created! You can now log in.');
@@ -22,6 +32,7 @@ const Register = () => {
       setMessage('❌ Failed to register');
     }
   };
+  
 
   return (
     <div className="auth-container">
