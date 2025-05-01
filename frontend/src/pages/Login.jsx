@@ -8,6 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+  const [errorKey, setErrorKey] = useState(0); // Key to trigger re-render of the error message
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,6 +21,7 @@ const Login = () => {
       navigate('/');
     } catch (err) {
       setError('Invalid credentials');
+      setErrorKey(prevKey => prevKey + 1); // Increment the key to force re-render of error message
     }
   };
 
@@ -33,7 +35,7 @@ const Login = () => {
           <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" required />
           <button type="submit">Login</button>
         </form>
-        {error && <p className="error-msg">{error}</p>}
+        {error && <p key={errorKey} className="error-msg">{error}</p>} {/* Trigger animation on error change */}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import '../style/Auth.css';
 const Register = () => {
   const [form, setForm] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
+  const [messageKey, setMessageKey] = useState(0); // Key to trigger re-render
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,19 +22,21 @@ const Register = () => {
   
     if (!isStrong) {
       setMessage("❌ Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol.");
+      setMessageKey(prevKey => prevKey + 1);  // Increment the key to force re-render
       return;
     }
   
     try {
       await axios.post('http://localhost:5000/register', form);
       setMessage('✅ Account created! You can now log in.');
+      setMessageKey(prevKey => prevKey + 1);  // Increment the key to force re-render
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
       const errorMsg = err.response?.data?.detail || 'Failed to register';
-      setMessage(`❌ ${errorMsg}${retryNote}`);
+      setMessage(`❌ ${errorMsg}`);
+      setMessageKey(prevKey => prevKey + 1);  // Increment the key to force re-render
     }
   };
-  
 
   return (
     <div className="auth-container">
@@ -45,7 +48,7 @@ const Register = () => {
           <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" required />
           <button type="submit">Register</button>
         </form>
-        {message && <p>{message}</p>}
+        {message && <p key={messageKey} className="error-msg">{message}</p>}
       </div>
     </div >
   );
