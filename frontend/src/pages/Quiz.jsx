@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import ReactPlayer from "react-player";
 import "../style/Quiz.css";
 import AuthContext from '../Context/AuthContext';
+import { Link } from "react-router-dom"; // Ensure you're using React Router
 
 const Quiz = () => {
   const { user } = useContext(AuthContext);
@@ -16,6 +17,7 @@ const Quiz = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [showToast, setShowToast] = useState(false); // 👈 Toast state
 
   useEffect(() => {
     fetch("/labels.json")
@@ -39,8 +41,7 @@ const Quiz = () => {
         .catch((err) => {
           console.error("Error fetching user data:", err);
         });
-    }
-    else {
+    } else {
       const guestScore = parseInt(localStorage.getItem("guestHighScore"), 10);
       if (!isNaN(guestScore)) setHighScore(guestScore);
     }
@@ -80,9 +81,7 @@ const Quiz = () => {
       setFeedback("❌ Wrong!");
       updateHighScore(score);
       setScore(0);
-      setTimeout(() => {
-        setHasStarted(false);
-      }, 1500);
+      setTimeout(() => setHasStarted(false), 5000);
     }
   };
 
@@ -102,6 +101,8 @@ const Quiz = () => {
         });
       } else {
         localStorage.setItem("guestHighScore", latestScore);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000); // 👈 Auto-hide after 5 sec
       }
     }
   };
@@ -128,14 +129,25 @@ const Quiz = () => {
         <div className="congrats-animation">🎉 New High Score! 🎉</div>
       )}
 
-      <ReactPlayer
-        url={question.sample_video}
-        controls={true}
-        playing={true}
-        muted={true}
-        width="320px"
-        height="180px"
-      />
+      {showToast && (
+        <div className="login-toast">
+          <p>
+            🎯 <strong>New High Score!</strong> <br />
+            <Link to="/login">Login</Link> or <Link to="/register">Register</Link> to save your progress.
+          </p>
+        </div>
+      )}
+
+      <div className="video-wrapper">
+        <ReactPlayer
+          url={question.sample_video}
+          controls={true}
+          playing={true}
+          muted={true}
+          width="100%"
+          height="100%"
+        />
+      </div>
 
       <div className="score">
         <p>Score: {score}</p>
@@ -144,30 +156,14 @@ const Quiz = () => {
 
       <div className="feedback">{feedback && <p>{feedback}</p>}</div>
 
-      <div
-        className="options"
-        style={{
-          display: "flex",
-          gap: "1rem",
-          flexWrap: "wrap",
-          marginTop: "1rem",
-        }}
-      >
+      <div className="options">
         {options.map((opt) => (
           <img
             key={opt.name}
             src={opt.image}
             alt={opt.name}
             onClick={() => !isDisabled && handleClick(opt)}
-            style={{
-              cursor: isDisabled ? "not-allowed" : "pointer",
-              border: "2px solid #ccc",
-              borderRadius: "8px",
-              width: 120,
-              height: 120,
-              objectFit: "cover",
-              opacity: isDisabled ? 0.6 : 1,
-            }}
+            className={`option-img ${isDisabled ? "disabled" : ""}`}
           />
         ))}
       </div>
