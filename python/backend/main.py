@@ -48,6 +48,9 @@ def register_user(login_data: LoginRequest):
     register_new_user(login_data.username, login_data.password)
     return {"message": "User registered successfully!"}
 
+@app.post("/convert")
+def convert(input: InputText):
+    return convert_to_isl(input.sentence)
 
 # For local development
 if __name__ == "__main__":
