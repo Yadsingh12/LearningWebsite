@@ -29,7 +29,8 @@ const Register = () => {
       setMessage('✅ Account created! You can now log in.');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
-      setMessage('❌ Failed to register');
+      const errorMsg = err.response?.data?.detail || 'Failed to register';
+      setMessage(`❌ ${errorMsg}${retryNote}`);
     }
   };
   
