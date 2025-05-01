@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import ReactPlayer from "react-player";
 import "../style/Quiz.css";
 import AuthContext from '../Context/AuthContext';
 
@@ -127,12 +128,13 @@ const Quiz = () => {
         <div className="congrats-animation">🎉 New High Score! 🎉</div>
       )}
 
-      <video
-        src={question.sample_video}
-        controls
-        width="320"
-        autoPlay
-        muted
+      <ReactPlayer
+        url={question.sample_video}
+        controls={true}
+        playing={true}
+        muted={true}
+        width="320px"
+        height="180px"
       />
 
       <div className="score">
