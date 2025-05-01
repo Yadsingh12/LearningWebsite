@@ -1,66 +1,148 @@
-# Object Detection using YOLOv8 and Tensorflow.js
+# 🧠 ISL Learning Platform – Indian Sign Language Web App
 
-Object Detection application right in your browser. Serving YOLOv8 in browser using tensorflow.js
-with `webgl` backend.
+A full-stack interactive web application to help users learn Indian Sign Language (ISL) through real-time object detection, grammar exercises, and video-based quizzes. Built with modern web technologies, this platform combines computer vision, linguistics, and accessibility features into an educational tool.
 
-**Setup**
+---
 
-```
-yarn install #Install dependencies
-```
+## 🚀 Features
 
-**Scripts**
+### 📸 1. Object Detection Module
+- Detect real-world objects in real-time using **YOLOv8 in the browser**.
+- Users can **click on detected items** to view:
+  - The ISL **sign image**.
+  - A brief **textual description**.
+- Promotes **visual association** between physical objects and ISL vocabulary.
+
+### 🧠 2. ISL Quiz Module
+- Watch **video clips of ISL signs** and select the correct meaning from 4 image options.
+- Quiz questions and options are **randomly shuffled**.
+- Reinforces vocabulary learning through **video interaction**.
+
+### 📘 3. Grammar Learning Module
+- Learn ISL grammar by comparing it with basic English sentence structures.
+- Includes **manually curated rules** and **practice exercises** (5 per rule).
+- Focused on **sentence reordering** tasks for subject-object-verb and interrogatives.
+
+### 🔁 4. English-to-ISL Grammar Translation (Upcoming)
+- Rule-based grammar translation system under development.
+- Goal: Translate natural English sentences into grammatically correct ISL order.
+- Will support **root word extraction** and stopword removal during preprocessing.
+
+### 🔐 5. User Authentication and Tracking
+- Login/Signup via **JWT-based authentication**.
+- User progress for grammar and quizzes is stored in the **FastAPI backend**.
+
+---
+
+## 💻 System Architecture
+
+### 2.3.1 Real-time Processing
+- YOLOv8 runs **in-browser with TensorFlow.js** for fast, client-side object detection.
+
+### 2.3.2 Backend API (FastAPI)
+- Manages:
+  - **User auth**
+  - **Progress tracking**
+  - **Grammar translation API** (WIP)
+
+### 2.3.3 Frontend (React)
+- Pages:
+  - Login/Signup
+  - Home
+  - Object Detection
+  - Grammar
+  - Quiz
+- React Router DOM for navigation.
+- Context API for authentication state.
+- Dynamic rendering of detection results and exercises.
+
+---
+
+## 📦 Dataset & Media Sources
+
+- **Object Images**: Downloaded via `bing_image_downloader`, labeled for YOLO.
+- **Quiz Videos**: Pre-recorded ISL signs for key words.
+- **Grammar Rules**: Hand-crafted with example sentences and reordered ISL variants.
+- **Translation Tool Data**: In-progress collection of aligned English–ISL sentence pairs.
+
+---
+
+## 📂 Object Detection using YOLOv8 and Tensorflow.js
+
+Object Detection application running entirely in the browser using `TensorFlow.js` with `webgl` backend.
+
+### 🛠 Setup
 
 ```bash
-yarn dev # Start dev server
-yarn build # Build for productions
+yarn install # Install dependencies
 ```
 
-## Model
+### 📜 Scripts
 
-YOLOv8n model converted to tensorflow.js.
-
-```
-used model : yolov8n
-size       : 13 Mb
+```bash
+yarn dev     # Start development server
+yarn build   # Build for production
 ```
 
-**Use another model**
+### 🧠 Model
 
-Use another YOLOv8 model.
+YOLOv8n model converted to TensorFlow.js.
 
-1. Export YOLOv8 model to tfjs format. Read more on the [official documentation](https://docs.ultralytics.com/tasks/detection/#export)
+```bash
+Model used: yolov8n
+Size:       13 MB
+```
 
-   ```python
-   from ultralytics import YOLO
+---
 
-   # Load a model
-   model = YOLO("yolov8n.pt")  # load an official model
+### 🔄 Use Another YOLOv8 Model
 
-   # Export the model
-   model.export(format="tfjs")
-   ```
+1. Export your YOLOv8 model to TensorFlow.js:
 
-2. Copy `yolov8*_web_model` to `./public`
-3. Update `modelName` in `App.jsx` to new model name
-   ```jsx
-   ...
-   // model configs
-   const modelName = "yolov8*"; // change to new model name
-   ...
-   ```
-4. Done! 😊
+```python
+from ultralytics import YOLO
 
-## Credits
+model = YOLO("yolov8n.pt")
+model.export(format="tfjs")
+```
 
-Part of the object detection module is based on [yolov8-tfjs](https://github.com/Hyuto/yolov8-tfjs) by Wahyu Setianto.
+2. Copy `yolov8*_web_model` folder to `./public`.
 
+3. Update `modelName` in `App.jsx`:
 
-**Note: Custom Trained YOLOv8 Models**
+```jsx
+const modelName = "yolov8*";
+```
 
-Please update `src/utils/labels.json` with your new classes.
+4. Done! ✅
 
-## Reference
+---
 
-- https://github.com/ultralytics/ultralytics
-- https://github.com/Hyuto/yolov8-onnxruntime-web
+### 📂 Note for Custom Models
+
+If using custom-trained YOLOv8 models:
+- Update `src/utils/labels.json` with your new class names.
+
+### 🙏 Credits
+
+- Based on [yolov8-tfjs](https://github.com/Hyuto/yolov8-tfjs) by Wahyu Setianto.
+- Other references:
+  - https://github.com/ultralytics/ultralytics
+  - https://github.com/Hyuto/yolov8-onnxruntime-web
+
+---
+
+## 📈 Future Enhancements
+
+- Full **translation from English to ISL grammar** using ML models.
+- Admin dashboard for content updates.
+- Mobile responsiveness and **offline grammar module**.
+- **Speech-to-sign** and **sign-to-speech** support for accessibility.
+
+---
+
+## 👨‍💻 Author
+
+**Your Name**  
+Developer | ML Enthusiast | Accessibility Advocate  
+LinkedIn: https://www.linkedin.com/in/yadwinder-singh-4a7456248/
