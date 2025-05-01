@@ -35,27 +35,14 @@ const BoundingBoxPopup = ({ boundingBoxes, onClose }) => {
         <h3>{currentBox.name}</h3>
         <p>{currentBox.description}</p>
 
-        {currentBox.sample_video && (
-          currentBox.sample_video.includes("youtube.com") ? (
-            <ReactPlayer
-              url={currentBox.sample_video}
-              width="560px"
-              height="315px"
-              controls
-              muted
-              playing={false}
-            />
-          ) : (
-            <ReactPlayer
-              url={currentBox.sample_video}
-              width="560px"
-              height="315px"
-              controls
-              muted
-              playing={false}
-            />
-          )
-        )}
+        <ReactPlayer
+          url={currentBox.sample_video}
+          width="560px"
+          height="315px"
+          controls
+          muted
+          playing={false}
+        />
 
         {boundingBoxes.length > 1 && (
           <button onClick={() => setCurrentIndex((prev) => (prev + 1) % boundingBoxes.length)}>Next</button>
