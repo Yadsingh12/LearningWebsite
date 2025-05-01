@@ -15,6 +15,7 @@ const Sidebar = () => {
           <li><Link to="/object-detection">🔍 Object Detection</Link></li>
           <li><Link to="/quiz">🧠 Quiz</Link></li>
           <li><Link to="/isl-grammar">📝 ISL Grammar</Link></li>
+          <li><Link to="/isl-grammar/convertToISL">🔄 Convert to ISL</Link></li>
           <br></br>
           {user ? (
             <>
