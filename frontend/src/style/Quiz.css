@@ -44,3 +44,36 @@
   transform: scale(1.05);
   border-color: #007bff;
 }
+
+.start-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.start-button:hover {
+  background-color: #45a049;
+}
+
+.congrats-animation {
+  font-size: 24px;
+  color: gold;
+  font-weight: bold;
+  animation: popUp 0.5s ease-in-out alternate infinite;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}

@@ -13,7 +13,9 @@ from auth import (
     get_current_user,
     register_new_user,
     update_user_progress,
+    update_user_high_score,
     LoginRequest,
+    HighScoreRequest,
     User,
 )
 from isl_converter import convert_to_isl
@@ -23,6 +25,7 @@ load_dotenv()
 
 app = FastAPI()
 
+# CORS settings
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -37,19 +40,17 @@ class InputText(BaseModel):
     sentence: str
 
 
+class CompleteModuleRequest(BaseModel):
+    module_name: str
+
+
 @app.post("/login")
 def login(login_data: LoginRequest):
     user = get_user(login_data.username)
     if not user or not verify_password(login_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect username or password")
-
-    access_token = create_access_token(data={"sub": user.username})
-    return {"token": access_token}
-
-
-@app.get("/protected")
-def protected_route(current_user: User = Depends(get_current_user)):
-    return {"username": current_user.username}
+    token = create_access_token(data={"sub": user.username})
+    return {"token": token}
 
 
 @app.post("/register")
@@ -58,9 +59,9 @@ def register_user(login_data: LoginRequest):
     return {"message": "User registered successfully!"}
 
 
-# Request model to parse the module name from the POST body
-class CompleteModuleRequest(BaseModel):
-    module_name: str
+@app.get("/protected")
+def protected_route(current_user: User = Depends(get_current_user)):
+    return {"username": current_user.username}
 
 
 @app.post("/complete_grammar_module")
@@ -82,7 +83,15 @@ def get_user_data(current_user: User = Depends(get_current_user)):
     return {
         "username": user_in_db.username,
         "completed_modules": user_in_db.completed_modules,
+        "high_score": user_in_db.high_score,
     }
+
+
+@app.post("/update_highscore")
+def update_high_score(
+    data: HighScoreRequest, current_user: User = Depends(get_current_user)
+):
+    return update_user_high_score(current_user.username, data.highScore)
 
 
 @app.post("/convert")

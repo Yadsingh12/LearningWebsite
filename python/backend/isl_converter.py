@@ -123,11 +123,22 @@ def apply_transformations(sentence):
     return transformed
 
 def convert_to_isl(text: str):
-    expanded = expand_contractions(text)
-    punctuation_free = remove_punctuation(expanded)
-    filtered = remove_stopwords(punctuation_free)
-    root = replace_with_rootwords(filtered)
-    reordered = reorder(root)
-    transformed = apply_transformations(reordered)
-    
-    return make_string(transformed)
+    # Step 1: Break into sentences using spaCy
+    doc = nlp(text)
+    sentences = [sent.text.strip() for sent in doc.sents if sent.text.strip()]
+
+    isl_sentences = []
+
+    for sentence in sentences:
+        expanded = expand_contractions(sentence)
+        punctuation_free = remove_punctuation(expanded)
+        filtered = remove_stopwords(punctuation_free)
+        root = replace_with_rootwords(filtered)
+        reordered = reorder(root)
+        transformed = apply_transformations(reordered)
+        isl_sentence = make_string(transformed)
+        if isl_sentence:
+            isl_sentences.append(isl_sentence)
+
+    return ' | '.join(isl_sentences)
+

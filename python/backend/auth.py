@@ -8,7 +8,7 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 
-# Load env variables
+# Load environment variables
 load_dotenv()
 
 # Environment variables
@@ -35,7 +35,8 @@ class User(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
-    completed_modules: list  # List of completed grammar modules
+    completed_modules: list # List of completed module names
+    high_score: int = 0 # Default high score in quiz
 
 
 class LoginRequest(BaseModel):
@@ -43,7 +44,10 @@ class LoginRequest(BaseModel):
     password: str
 
 
-# Helper functions
+class HighScoreRequest(BaseModel):
+    highScore: int
+
+
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -55,39 +59,41 @@ def get_password_hash(password):
 def get_user(username: str) -> Optional[UserInDB]:
     user_data = users_collection.find_one({"username": username})
     if user_data:
-        # Auto-add 'completed_modules' to DB if missing
-        if "completed_modules" not in user_data:
-            users_collection.update_one(
-                {"username": username}, {"$set": {"completed_modules": []}}
-            )
-            user_data["completed_modules"] = []
+        user_data.setdefault("completed_modules", [])
+        user_data.setdefault("high_score", 0)
+
+        # Patch DB if missing keys
+        users_collection.update_one(
+            {"username": username},
+            {"$set": {
+                "completed_modules": user_data["completed_modules"],
+                "high_score": user_data["high_score"]
+            }},
+        )
 
         # Return UserInDB object with completed_modules
         return UserInDB(
             username=user_data["username"],
             hashed_password=user_data["password"],
-            completed_modules=user_data.get("completed_modules", []),
+            completed_modules=user_data["completed_modules"],
+            high_score=user_data["high_score"],
         )
     return None
 
 
 def create_access_token(data: dict):
-    to_encode = data.copy()
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return jwt.encode(data.copy(), SECRET_KEY, algorithm=ALGORITHM)
 
 
 def register_new_user(username: str, password: str):
     if users_collection.find_one({"username": username}):
         raise HTTPException(status_code=400, detail="Username already exists")
-
-    hashed_password = get_password_hash(password)
-    users_collection.insert_one(
-        {
-            "username": username,
-            "password": hashed_password,
-            "completed_modules": [],  # Initialize with an empty list for completed modules
-        }
-    )
+    users_collection.insert_one({
+        "username": username,
+        "password": get_password_hash(password),
+        "completed_modules": [],
+        "high_score": 0,
+    })
 
 
 # Update user progress (mark a module as completed)
@@ -111,7 +117,22 @@ def update_user_progress(username: str, module_name: str):
         raise HTTPException(status_code=404, detail="User not found")
 
 
-# Dependency for routes
+def update_user_high_score(username: str, new_score: int):
+    user_data = users_collection.find_one({"username": username})
+    if not user_data:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    current_high = user_data.get("high_score", 0)
+    if new_score > current_high:
+        users_collection.update_one(
+            {"username": username},
+            {"$set": {"high_score": new_score}},
+        )
+        return {"message": "High score updated"}
+    else:
+        return {"message": "Score not higher than existing high score"}
+
+
 def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -120,7 +141,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
+        username = payload.get("sub")
         if username is None:
             raise credentials_exception
         return User(username=username)
