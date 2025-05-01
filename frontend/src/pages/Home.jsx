@@ -1,56 +1,91 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../style/home.css"; // Ensure the path is correct
+import "../style/Home.css";
 
 const Home = () => {
   return (
     <div className="App">
       {/* Hero Section */}
-      <section style={{ maxWidth: "800px" }}>
+      <section className="hero fade-in">
         <h1>Welcome to ISL Learning Hub</h1>
         <p>
-          Learn Indian Sign Language (ISL) interactively through real-time
-          gesture detection, grammar lessons, quizzes, and more!
+          Learn Indian Sign Language (ISL) through real-world object detection, grammar tools,
+          interactive quizzes, and educational videos — all for free!
+        </p>
+        <div className="auth-buttons">
+          <Link to="/login" className="btn login">Login</Link>
+          <Link to="/register" className="btn register">Register</Link>
+        </div>
+      </section>
+
+      {/* Login Encouragement */}
+      <section className="login-reminder bounce-in">
+        <h2>Why Sign Up?</h2>
+        <p>
+          Track your learning journey, save quiz progress, and become part of a
+          supportive community helping one another grow in ISL!
+        </p>
+        <p>
+          We’re building a space where users can publish, polish, and perfect their skills. 
+          Registering is your first step to contributing!
         </p>
       </section>
 
       {/* Features Section */}
-      <section style={{ maxWidth: "1000px", width: "100%" }}>
-        <h2 style={{ margin: "2rem 0 1rem 0", color: "#444" }}>Explore Features</h2>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "1.5rem",
-          }}
-        >
+      <section className="features">
+        <h2>Explore Features</h2>
+        <div className="feature-grid">
           <FeatureCard
             title="Object Detection"
-            description="Use your camera to detect hand gestures and learn ISL signs interactively."
+            description="Use your camera to detect real-world objects and instantly learn their ISL signs and meaning. It’s fun and makes learning intuitive!"
             to="/object-detection"
           />
           <FeatureCard
             title="Grammar Lessons"
-            description="Explore ISL grammar rules and sentence formation techniques."
+            description="Understand ISL grammar, sentence reordering, and formation — the most critical part of fluency. Your feedback here is most welcome!"
             to="/isl-grammar"
           />
           <FeatureCard
             title="Interactive Quiz"
-            description="Test your knowledge and reinforce your learning with quizzes."
+            description="Play through our quiz-based learning game and test your knowledge. Try reaching the final level — can you do it?"
             to="/quiz"
+          />
+          <FeatureCard
+            title="Translate to ISL (Beta)"
+            description="Try our rule-based English to ISL converter. Deep learning version coming soon — we need your help to train it!"
+            to="isl-grammar/convertToISL"
+          />
+          <FeatureCard
+            title="Video Library"
+            description="Watch ISL animations and grammar clips in action. Perfect for visual learners. More content added regularly!"
+            to="/video-library"
           />
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section style={{ marginTop: "3rem", textAlign: "center" }}>
-        <h2>Contact Us</h2>
-        <p style={{ color: "#555" }}>
-          Have questions, suggestions, or feedback? Drop an email at:
+      {/* Community Section */}
+      <section className="community fade-in">
+        <h2>Help Us Improve</h2>
+        <p>
+          Everything here is just the beginning. Your honest feedback is needed
+          to make this accurate and impactful. Whether it’s grammar rules,
+          sentence suggestions, or ideas — reach out!
         </p>
-        <p style={{ marginTop: "0.5rem", fontSize: "1.1rem", color: "#333" }}>
-          📧 Email: <a href="mailto:yadaulakh1977@gmail.com">yadaulakh1977@gmail.com</a><br />
+        <p>
+          🔥 Be part of a bold mission to revolutionize ISL learning. We have
+          ambitious goals: community content sharing, user dashboards,
+          certification paths, and much more — all powered by YOU.
+        </p>
+      </section>
+
+      {/* Contact Section */}
+      <section className="contact">
+        <h2>Contact Us</h2>
+        <p>
+          Questions, suggestions, or feedback? Reach out and join our journey:
+        </p>
+        <p className="email">
+          📧 <a href="mailto:yadaulakh1977@gmail.com">yadaulakh1977@gmail.com</a>
         </p>
       </section>
     </div>
@@ -58,22 +93,10 @@ const Home = () => {
 };
 
 const FeatureCard = ({ title, description, to }) => (
-  <Link to={to}>
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: "10px",
-        padding: "1.5rem",
-        width: "250px",
-        backgroundColor: "#fff",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
-        transition: "transform 0.2s ease",
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
-      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-    >
-      <h3 style={{ marginBottom: "1rem", color: "#222" }}>{title}</h3>
-      <p style={{ color: "#555" }}>{description}</p>
+  <Link to={to} className="feature-link">
+    <div className="feature-card">
+      <h3>{title}</h3>
+      <p>{description}</p>
     </div>
   </Link>
 );

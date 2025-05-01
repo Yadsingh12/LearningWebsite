@@ -1,44 +1,165 @@
 .App {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: initial;
-    align-items: center;
-    text-align: center;
-    padding: 1rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #f8f9fa, #e0e0e0);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #f8f9fa, #e0e0e0);
+}
+
+h1, h2 {
+  color: #333;
+  text-align: center;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0.5rem auto;
+  text-align: center;
+}
+
+.hero {
+  padding: 2rem 1rem;
+  animation: fadeIn 1.5s ease-in;
+}
+
+.auth-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.login {
+  background-color: #007bff;
+  color: white;
+}
+
+.login:hover {
+  background-color: #0056b3;
+}
+
+.register {
+  background-color: #28a745;
+  color: white;
+}
+
+.register:hover {
+  background-color: #1e7e34;
+}
+
+.login-reminder {
+  background-color: #fff3cd;
+  border-left: 5px solid #ffc107;
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+  animation: bounceIn 1s ease;
+  max-width: 850px;
+  text-align: center;
+}
+
+.features {
+  max-width: 1000px;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.feature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.feature-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 250px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.feature-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.community {
+  background-color: #e6f2ff;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 10px;
+  max-width: 950px;
+  text-align: center;
+}
+
+.contact {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.email a {
+  color: #333;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+.email a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  h1 {
-    font-size: 2.5rem;
-    color: #333;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    color: #666;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
   }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #333;
-    color: #fff;
-    border: 2px solid #333;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
   }
-  
-  button:hover {
-    background-color: #fff;
-    color: #333;
-    border-color: #333;
+  100% {
+    transform: scale(1);
   }
-  
-  a {
-    text-decoration: none;
-  }
-  
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease-in;
+}
+
+.bounce-in {
+  animation: bounceIn 1s ease-in;
+}
