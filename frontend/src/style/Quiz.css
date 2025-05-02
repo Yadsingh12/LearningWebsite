@@ -42,16 +42,23 @@
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   margin-top: 1rem;
+  width: 78vw;
+  height: 30vh;
+  border-radius: 10px;
+  background-color: #4caf50;
 }
 
 .option-img {
+  padding: 2px;
   border: 2px solid #ccc;
   border-radius: 8px;
   width: 120px;
   height: 120px;
   object-fit: cover;
   transition: 0.2s ease;
+  background-color: black;
 }
 
 .option-img:hover {

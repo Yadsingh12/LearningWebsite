@@ -30,7 +30,7 @@ const Login = () => {
       <button className="back-btn" type="button" onClick={() => navigate(-1)}>← Back</button>
       <div className="auth-form">
         <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form class="jasssu" onSubmit={handleSubmit}>
           <input name="username" value={form.username} onChange={handleChange} placeholder="Username" required />
           <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" required />
           <button type="submit">Login</button>

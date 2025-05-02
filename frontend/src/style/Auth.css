@@ -5,8 +5,9 @@
   align-items: center;
   justify-content: center;
   min-height: 90vh;
-  background: #eaf4ff;
+  background: #e6f7ff;
   padding: 20px;
+  padding-top: 0%;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -20,37 +21,49 @@
   font-size: 18px;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
+  height: 10vh;
 }
 
 .back-btn:hover {
   color: #093656;
-  text-decoration: underline;
 }
 
 /* Main card */
 .auth-form {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  background-color: white;
   padding: 40px 30px;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 123, 255, 0.1);
   text-align: center;
+}
+.auth-form:hover{
+  border: 2px solid black;
+}
+
+.jasssu{
+  background-color: white;
 }
 
 /* Title */
 .auth-form h2 {
   color: #004080;
   margin-bottom: 30px;
+  background-color: white;
 }
 
 /* Inputs */
 .auth-form input {
-  width: 100%;
+  width: 70%;
   padding: 12px 14px;
   margin-bottom: 18px;
   font-size: 15px;
   border: 1px solid #cce0ff;
+  background-color: white;
   border-radius: 6px;
   transition: border-color 0.3s;
 }
@@ -58,11 +71,12 @@
 .auth-form input:focus {
   border-color: #0077cc;
   outline: none;
+  
 }
 
 /* Submit button */
 .auth-form button[type="submit"] {
-  width: 100%;
+  width: 70%;
   background-color: #0077cc;
   color: #fff;
   border: none;
