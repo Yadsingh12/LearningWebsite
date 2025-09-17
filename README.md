@@ -56,33 +56,16 @@ A full-stack interactive web application to help users learn Indian Sign Languag
 - Context API for authentication state.
 - Dynamic rendering of detection results and exercises.
 
----
-
-## 📦 Dataset & Media Sources
+### 📦 Dataset & Media Sources
 
 - **Object Images**: Downloaded via `bing_image_downloader`, labeled for YOLO.
 - **Quiz Videos**: Pre-recorded ISL signs for key words.
 - **Grammar Rules**: Hand-crafted with example sentences and reordered ISL variants.
 - **Translation Tool Data**: In-progress collection of aligned English–ISL sentence pairs.
 
----
-
-## 📂 Object Detection using YOLOv8 and Tensorflow.js
+### 📂 Object Detection using YOLOv8 and Tensorflow.js
 
 Object Detection application running entirely in the browser using `TensorFlow.js` with `webgl` backend.
-
-### 🛠 Setup
-
-```bash
-yarn install # Install dependencies
-```
-
-### 📜 Scripts
-
-```bash
-yarn dev     # Start development server
-yarn build   # Build for production
-```
 
 ### 🧠 Model
 
@@ -93,9 +76,12 @@ Model used: yolov8n
 Size:       13 MB
 ```
 
----
+#### 📂 Note for Custom-trained Model on different classes
 
-### 🔄 Use Another YOLOv8 Model
+If using custom-trained YOLOv8 models:
+- Update `src/utils/labels.json` with your new class names.
+
+#### 🔄 Use Another YOLOv8 Model
 
 1. Export your YOLOv8 model to TensorFlow.js:
 
@@ -116,19 +102,37 @@ const modelName = "yolov8*";
 
 4. Done! ✅
 
----
-
-### 📂 Note for Custom Models
-
-If using custom-trained YOLOv8 models:
-- Update `src/utils/labels.json` with your new class names.
-
-### 🙏 Credits
+#### 🙏 Credits
 
 - Based on [yolov8-tfjs](https://github.com/Hyuto/yolov8-tfjs) by Wahyu Setianto.
 - Other references:
   - https://github.com/ultralytics/ultralytics
   - https://github.com/Hyuto/yolov8-onnxruntime-web
+
+---
+
+## 🛠 Setup
+
+### frontend:
+
+In frontend:
+
+```bash
+yarn install # Install dependencies
+
+yarn dev     # Start development server
+yarn build   # Build for production
+```
+
+### backend:
+
+in python/backend:
+
+```bash
+# make a virtual environment
+pip install -r requirements_backend.txt # Install dependencies
+uvicorn main:app --host 0.0.0.0 --port 5000 --reload # Start development server
+```
 
 ---
 
@@ -143,6 +147,6 @@ If using custom-trained YOLOv8 models:
 
 ## 👨‍💻 Author
 
-**Your Name**  
+**Yadwinder Singh**  
 Developer | ML Enthusiast | Accessibility Advocate  
 LinkedIn: https://www.linkedin.com/in/yadwinder-singh-4a7456248/
