@@ -1,0 +1,21 @@
+version: "1"
+services:
+- type: web
+  name: LearningWebsite
+  runtime: python
+  repo: https://github.com/Yadsingh12/LearningWebsite
+  plan: free
+  envVars:
+  - key: JWT_ALGORITHM
+    sync: false
+  - key: SECRET_KEY
+    sync: false
+  - key: MONGODB_URI
+    sync: false
+  region: oregon
+  buildCommand: |
+      pip install -r requirements_backend.txt
+      python -m spacy download en_core_web_sm
+  startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+  autoDeployTrigger: commit
+  rootDir: python/backend/
