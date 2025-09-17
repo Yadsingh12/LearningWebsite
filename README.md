@@ -145,6 +145,10 @@ uvicorn main:app --host 0.0.0.0 --port 5000 --reload # Start development server
 
 ---
 
+## Media
+Photos can be downloaded using **bing_image_downloader** library of python as is done in python/images/download_images.py
+Videos have been collected from an Indian Sign Language expert.
+
 ## 👨‍💻 Author
 
 **Yadwinder Singh**  
