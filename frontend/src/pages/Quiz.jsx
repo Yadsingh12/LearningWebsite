@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import ReactPlayer from "react-player";
 import "../style/Quiz.css";
-import AuthContext from '../Context/AuthContext';
-import { Link } from "react-router-dom"; // Ensure you're using React Router
+import AuthContext from "../Context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Quiz = () => {
-  const { user } = useContext(AuthContext);
-  const token = localStorage.getItem('authToken');
+  const { user, backendRequest } = useContext(AuthContext);
 
   const [labels, setLabels] = useState([]);
   const [question, setQuestion] = useState(null);
@@ -17,9 +16,10 @@ const Quiz = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const [showToast, setShowToast] = useState(false); // 👈 Toast state
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
+    // load labels from local file
     fetch("/labels.json")
       .then((res) => res.json())
       .then((data) => {
@@ -27,25 +27,21 @@ const Quiz = () => {
         setLabels(enabledData);
       });
 
-    if (user && token) {
-      fetch("http://localhost:5000/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error("Failed to fetch user data");
-          return res.json();
-        })
-        .then((data) => {
-          setHighScore(data.high_score || 0);
-        })
+    if (user) {
+      // logged-in user → load score from backend
+      backendRequest
+        .get("/user")
+        .then((res) => setHighScore(res.data.high_score || 0))
         .catch((err) => {
           console.error("Error fetching user data:", err);
+          setHighScore(0);
         });
     } else {
+      // guest mode → load score from localStorage
       const guestScore = parseInt(localStorage.getItem("guestHighScore"), 10);
       if (!isNaN(guestScore)) setHighScore(guestScore);
     }
-  }, [user, token]);
+  }, [user]);
 
   const startQuiz = () => {
     setScore(0);
@@ -90,19 +86,14 @@ const Quiz = () => {
       setHighScore(latestScore);
       setShowCongrats(true);
 
-      if (user && token) {
-        fetch("http://localhost:5000/update_highscore", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ highScore: latestScore }),
-        });
+      if (user) {
+        // save to backend for logged-in users
+        backendRequest.post("/update_highscore", { highScore: latestScore });
       } else {
+        // save to localStorage for guest users
         localStorage.setItem("guestHighScore", latestScore);
         setShowToast(true);
-        setTimeout(() => setShowToast(false), 5000); // 👈 Auto-hide after 5 sec
+        setTimeout(() => setShowToast(false), 5000);
       }
     }
   };
@@ -133,7 +124,8 @@ const Quiz = () => {
         <div className="login-toast">
           <p>
             🎯 <strong>New High Score!</strong> <br />
-            <Link to="/login">Login</Link> or <Link to="/register">Register</Link> to save your progress.
+            <Link to="/login">Login</Link> or{" "}
+            <Link to="/register">Register</Link> to save your progress.
           </p>
         </div>
       )}
@@ -141,9 +133,9 @@ const Quiz = () => {
       <div className="video-wrapper">
         <ReactPlayer
           url={question.sample_video}
-          controls={true}
-          playing={true}
-          muted={true}
+          controls
+          playing
+          muted
           width="100%"
           height="100%"
         />

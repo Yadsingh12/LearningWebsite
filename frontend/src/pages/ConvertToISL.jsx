@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import '../style/convertToISL.css'; // optional CSS
+import React, { useState, useContext } from 'react';
+import AuthContext from '../Context/AuthContext';
+import '../style/convertToISL.css';
 
 export default function ConvertToISL() {
     const [input, setInput] = useState('');
     const [output, setOutput] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const { backendRequest, user } = useContext(AuthContext); // get axios instance & user
+
     const handleConvert = async () => {
         if (!input.trim()) return;
 
+        if (!user) {
+            setOutput('❌ You must be logged in to convert sentences.');
+            return;
+        }
+
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/convert', {
-                sentence: input
-            });
+            const response = await backendRequest.post('/convert', { sentence: input });
             setOutput(response.data); // assuming backend returns plain string
         } catch (err) {
             console.error(err);
-            setOutput('❌ Error converting to ISL grammar.');
+            if (err.response) {
+                setOutput(`❌ ${err.response.data?.detail || 'Error converting to ISL grammar.'}`);
+            } else {
+                setOutput('❌ Backend not responding. Please try later.');
+            }
         } finally {
             setLoading(false);
         }
@@ -45,7 +54,9 @@ export default function ConvertToISL() {
                             <li key={index}>{line}</li>
                         ))}
                     </ul>
-                    <p className="note">Note: The translations may not be correct or there can be multiple translations possible</p>
+                    <p className="note">
+                        Note: The translations may not be correct or there can be multiple translations possible
+                    </p>
                 </div>
             )}
         </div>
