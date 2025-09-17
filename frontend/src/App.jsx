@@ -15,7 +15,7 @@ import Register from "./pages/Register"; // optional, create if needed
 const App = () => {
   return (
     <AuthProvider>
-      <Router basename="/frontend">
+      <Router>
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
