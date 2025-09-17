@@ -7,8 +7,8 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', password: '' });
-  const [error, setError] = useState('');
-  const [errorKey, setErrorKey] = useState(0); // Key to trigger re-render of the error message
+  const [message, setMessage] = useState('');
+  const [messageKey, setMessageKey] = useState(0);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,10 +18,12 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(form.username, form.password);
-      navigate('/');
+      setMessage('✅ Login successful!');
+      setMessageKey(prev => prev + 1);
+      setTimeout(() => navigate('/'), 500);
     } catch (err) {
-      setError('Invalid credentials');
-      setErrorKey(prevKey => prevKey + 1); // Increment the key to force re-render of error message
+      setMessage('❌ Invalid username or password');
+      setMessageKey(prev => prev + 1);
     }
   };
 
@@ -30,12 +32,12 @@ const Login = () => {
       <button className="back-btn" type="button" onClick={() => navigate(-1)}>← Back</button>
       <div className="auth-form">
         <h2>Login</h2>
-        <form class="jasssu" onSubmit={handleSubmit}>
+        <form className="jasssu" onSubmit={handleSubmit}>
           <input name="username" value={form.username} onChange={handleChange} placeholder="Username" required />
           <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" required />
           <button type="submit">Login</button>
         </form>
-        {error && <p key={errorKey} className="error-msg">{error}</p>} {/* Trigger animation on error change */}
+        {message && <p key={messageKey} className="error-msg">{message}</p>}
       </div>
     </div>
   );

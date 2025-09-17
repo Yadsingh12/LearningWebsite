@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../Context/AuthContext';
 import '../style/Auth.css';
 
 const Register = () => {
+  const { register } = useContext(AuthContext);
   const [form, setForm] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
-  const [messageKey, setMessageKey] = useState(0); // Key to trigger re-render
+  const [messageKey, setMessageKey] = useState(0);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -15,26 +16,14 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // ✅ Password strength check
-    const password = form.password;
-    const isStrong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
-  
-    if (!isStrong) {
-      setMessage("❌ Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol.");
-      setMessageKey(prevKey => prevKey + 1);  // Increment the key to force re-render
-      return;
-    }
-  
     try {
-      await axios.post('http://localhost:5000/register', form);
-      setMessage('✅ Account created! You can now log in.');
-      setMessageKey(prevKey => prevKey + 1);  // Increment the key to force re-render
-      setTimeout(() => navigate('/login'), 1500);
+      await register(form.username, form.password);
+      setMessage('✅ Account created! Logging in...');
+      setMessageKey(prev => prev + 1);
+      setTimeout(() => navigate('/'), 1000);
     } catch (err) {
-      const errorMsg = err.response?.data?.detail || 'Failed to register';
-      setMessage(`❌ ${errorMsg}`);
-      setMessageKey(prevKey => prevKey + 1);  // Increment the key to force re-render
+      setMessage(err.message || '❌ Registration failed');
+      setMessageKey(prev => prev + 1);
     }
   };
 
@@ -43,14 +32,14 @@ const Register = () => {
       <button className="back-btn" type="button" onClick={() => navigate(-1)}>← Back</button>
       <div className="auth-form">
         <h2>Sign Up</h2>
-        <form class="jasssu" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input name="username" value={form.username} onChange={handleChange} placeholder="Username" required />
           <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" required />
           <button type="submit">Register</button>
         </form>
         {message && <p key={messageKey} className="error-msg">{message}</p>}
       </div>
-    </div >
+    </div>
   );
 };
 
